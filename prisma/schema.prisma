@@ -10,25 +10,25 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Product {
+model product {
   id         Int                @id @default(autoincrement())
   name       String             @unique
   price      Int
   created_at DateTime           @default(now())
-  stocks     StocksOnProducts[]
+  stocks     stocks_on_products[]
 }
 
-model Stock {
+model stock {
   id         Int                @id @default(autoincrement())
   name       String             @unique
   created_at DateTime           @default(now())
-  products   StocksOnProducts[]
+  products   stocks_on_products[]
 }
 
-model StocksOnProducts {
-  product    Product  @relation(fields: [productId], references: [id])
+model stocks_on_products {
+  product    product  @relation(fields: [productId], references: [id])
   productId  Int
-  stock      Stock    @relation(fields: [stockId], references: [id])
+  stock      stock    @relation(fields: [stockId], references: [id])
   stockId    Int
   assignedAt DateTime @default(now())
 
