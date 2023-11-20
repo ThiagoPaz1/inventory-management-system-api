@@ -1,10 +1,9 @@
-import { PrismaService } from "src/prisma/config";
-import { CreateProductDto } from "./dto/create-product.dto";
+import { CreateProductDto } from './dto/create-product.dto';
+
+import { prisma } from 'src/database/client';
 
 export class ProductRepository {
-  constructor(private prismaService: PrismaService) {}
-
   async create(data: CreateProductDto) {
-    this.prismaService.product.create({ data });
+    return await prisma.product.create({ data });
   }
 }

@@ -2,10 +2,14 @@ import { Injectable } from '@nestjs/common';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 
+import { ProductRepository } from './product.repository';
+
 @Injectable()
 export class ProductService {
-  create(createProductDto: CreateProductDto) {
-    return 'This action adds a new product';
+  constructor(private productRepository: ProductRepository) {}
+
+  async create(createProductDto: CreateProductDto) {
+    return await this.productRepository.create(createProductDto);
   }
 
   findAll() {
