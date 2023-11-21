@@ -1,5 +1,7 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Req } from '@nestjs/common';
+import { Request } from 'express';
 import { ProductService } from './product.service';
+import { OrderBy } from './types';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 
@@ -13,8 +15,12 @@ export class ProductController {
   }
 
   @Get()
-  findAll() {
-    return this.productService.findAll();
+  async findAll(@Req() req: Request) {
+    const skipPage = req.query?.skipPage ? Number(req.query?.skipPage) : 0;
+    const takePage = req.query?.takePage ? Number(req.query?.takePage) : 0;
+    const orderBy = req.query?.orderBy as OrderBy;
+
+    return await this.productService.findAll(skipPage, takePage, orderBy);
   }
 
   @Get(':id')

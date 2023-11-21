@@ -3,6 +3,7 @@ import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 
 import { ProductRepository } from './product.repository';
+import { OrderBy } from './types';
 
 @Injectable()
 export class ProductService {
@@ -12,8 +13,8 @@ export class ProductService {
     return await this.productRepository.create(createProductDto);
   }
 
-  findAll() {
-    return `This action returns all product`;
+  async findAll(skip?: number, take?: number, orderBy?: OrderBy) {
+    return await this.productRepository.getAll(skip, take, orderBy);
   }
 
   findOne(id: number) {
